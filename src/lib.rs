@@ -30,7 +30,7 @@ impl RowCol {
         RowCol {
             width: *width,
             height: *height,
-            row: index / height,
+            row: index / width,
             col: index % width,
         }
     }
@@ -148,12 +148,12 @@ impl Mand {
     }
 
 
-    pub fn new(x_min: f64, x_max: f64, y_min: f64, y_max: f64) -> Mand {
-        let width = 800;
-        let height = 800;
+    pub fn new(x_min: f64, x_max: f64, y_min: f64, y_max: f64, width: u32, height: u32, iters: u32) -> Mand {
+        let width = width;
+        let height = height;
         let x_range = CoordRange::new(x_min, x_max);
         let y_range = CoordRange::new(y_min, y_max);
-        let iters = 200;
+        
         let pixels = (0..width * height)
             .map(|p| {
                 if RowCol::from_index(p, &width, &height)
@@ -200,6 +200,15 @@ mod tests {
         let c = r1.to_complex(&range_r, &range_i);
         let ac = Complex::new(-2.0, -1.5);
         assert_eq!(c, ac);
+
+        let width: u32 = 1000;
+        let height: u32 = 300;
+        let r1 = RowCol::from_index(0, &width, &height);
+        assert!(r1.row == 0);
+        assert!(r1.col == 0);
+        let r2 = RowCol::from_index(1500, &width, &height);
+        assert!(r2.row == 1);
+        assert!(r2.col == 500);
     }
 
     #[test]
