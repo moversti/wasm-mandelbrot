@@ -1,0 +1,3 @@
+[submodule "wasm-mandelbrot-www"]
+	path = www
+	url = https://github.com/moversti/wasm-mandelbrot-www
